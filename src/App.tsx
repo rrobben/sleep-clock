@@ -4,7 +4,7 @@ import moment from "moment";
 import { useInterval } from "./hooks/useInterval";
 
 const SLEEPS = [
-    ["12:45", "14:45"],
+    ["12:45", "15:00"],
     ["18:50", "07:00"],
 ];
 
