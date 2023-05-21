@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import moment from "moment";
 import { useInterval } from "./hooks/useInterval";
+import { useScreenLock } from "./hooks/useScreenLock";
 
 const SLEEPS = [
     ["12:45", "15:00"],
@@ -39,6 +40,8 @@ function App() {
             })
         );
     }, [time]);
+
+    useScreenLock();
 
     return (
         <div className="App">
