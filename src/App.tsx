@@ -5,18 +5,25 @@ import { useInterval } from "./hooks/useInterval";
 import { useScreenLock } from "./hooks/useScreenLock";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import { Settings } from "./components/Settings";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
-const SLEEPS = [
-    ["12:45", "15:00"],
-    ["18:50", "07:00"],
-];
+const SLEEPS = [["19:00", "07:00"]];
 
-const FORMAT = "HH:mm";
+export const TIME_FORMAT = "HH:mm";
+
+const darkTheme = createTheme({
+    palette: {
+        mode: "dark",
+    },
+});
 
 function App() {
     const mode = new URLSearchParams(window.location.search).get("mode");
     const [time, setTime] = useState<moment.Moment>(moment());
     const [sleep, setSleep] = useState<boolean>(mode === "sleep");
+    const [periods, setPeriods] = useState<string[][]>(SLEEPS);
 
     const updateTime = () => {
         setTime(moment());
@@ -27,10 +34,10 @@ function App() {
     useEffect(() => {
         if (!mode) {
             setSleep(
-                SLEEPS.some((s) => {
+                periods.some((s) => {
                     const now = moment();
-                    const sleepStart = moment(s[0], FORMAT);
-                    const sleepEnd = moment(s[1], FORMAT);
+                    const sleepStart = moment(s[0], TIME_FORMAT);
+                    const sleepEnd = moment(s[1], TIME_FORMAT);
 
                     if (sleepStart.isAfter(sleepEnd)) {
                         if (now.isAfter(sleepStart) && now.isAfter(sleepEnd)) {
@@ -44,17 +51,21 @@ function App() {
                 })
             );
         }
-    }, [time]);
+    }, [time, periods]);
 
     useScreenLock();
 
     return (
-        <div className="App">
-            <header className={`App-header ${sleep ? "sleeping" : ""}`}>
-                {sleep ? <BedtimeIcon /> : <LightModeIcon />}
-                <p className={`clock ${sleep ? "sleeping" : ""}`}>{time.format(FORMAT)}</p>
-            </header>
-        </div>
+        <ThemeProvider theme={darkTheme}>
+            <CssBaseline />
+            <div className="App">
+                <header className={`App-header ${sleep ? "sleeping" : ""}`}>
+                    <Settings periods={periods} setPeriods={setPeriods} />
+                    {sleep ? <BedtimeIcon /> : <LightModeIcon />}
+                    <p className={`clock ${sleep ? "sleeping" : ""}`}>{time.format(TIME_FORMAT)}</p>
+                </header>
+            </div>
+        </ThemeProvider>
     );
 }
 
