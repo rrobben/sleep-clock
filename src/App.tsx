@@ -8,6 +8,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import { Settings } from "./components/Settings";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useLocalStorage } from "usehooks-ts";
 
 const SLEEPS = [["19:00", "07:00"]];
 
@@ -23,7 +24,7 @@ function App() {
     const mode = new URLSearchParams(window.location.search).get("mode");
     const [time, setTime] = useState<moment.Moment>(moment());
     const [sleep, setSleep] = useState<boolean>(mode === "sleep");
-    const [periods, setPeriods] = useState<string[][]>(SLEEPS);
+    const [periods, setPeriods] = useLocalStorage<string[][]>("periods", SLEEPS);
 
     const updateTime = () => {
         setTime(moment());
