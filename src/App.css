@@ -10,13 +10,24 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 20vmin);
-  color: white;
+  color: orange;
+&.sleeping {
+    background-color: black;
+
+    &>svg {
+      color: darkblue;
+    }
+  }
+
+  &>svg {
+    font-size: calc(10px + 40vmin);
+  }
 }
 
 .clock {
-  color: green;
+  color: orange;
 
   &.sleeping {
-    color: purple;
+    color: darkblue;
   }
 }
