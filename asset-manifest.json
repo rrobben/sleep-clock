@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/sleep-clock/static/css/main.daad3958.css",
-    "main.js": "/sleep-clock/static/js/main.0e8c741e.js",
+    "main.css": "/sleep-clock/static/css/main.d4274ede.css",
+    "main.js": "/sleep-clock/static/js/main.266b71fa.js",
     "static/js/787.18ae9d45.chunk.js": "/sleep-clock/static/js/787.18ae9d45.chunk.js",
     "service-worker.js": "/sleep-clock/service-worker.js",
     "index.html": "/sleep-clock/index.html",
-    "main.daad3958.css.map": "/sleep-clock/static/css/main.daad3958.css.map",
-    "main.0e8c741e.js.map": "/sleep-clock/static/js/main.0e8c741e.js.map",
+    "main.d4274ede.css.map": "/sleep-clock/static/css/main.d4274ede.css.map",
+    "main.266b71fa.js.map": "/sleep-clock/static/js/main.266b71fa.js.map",
     "787.18ae9d45.chunk.js.map": "/sleep-clock/static/js/787.18ae9d45.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.daad3958.css",
-    "static/js/main.0e8c741e.js"
+    "static/css/main.d4274ede.css",
+    "static/js/main.266b71fa.js"
   ]
 }
