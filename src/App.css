@@ -12,6 +12,7 @@
   font-size: calc(10px + 20vmin);
   color: orange;
 &.sleeping {
+    color: darkblue;
     background-color: black;
 
     &>svg {
