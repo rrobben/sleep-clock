@@ -1,43 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-export const useScreenLock = () => {
+export const useScreenLock = (active: boolean) => {
+    const lockRef = useRef<WakeLockSentinel | null | undefined>();
+
     const requestLock = async () => {
         if ("wakeLock" in navigator) {
-            let lock;
-
             try {
-                lock = await navigator.wakeLock.request("screen");
+                lockRef.current = await navigator.wakeLock.request("screen");
             } catch (err) {
+                lockRef.current = null;
                 console.error(err);
             }
-            return lock;
+        }
+    };
+
+    const releaseLock = async () => {
+        if (typeof lockRef.current !== "undefined" && lockRef.current != null) {
+            await lockRef.current.release();
+            lockRef.current = null;
+            console.log("Lock released 🎈");
         }
     };
 
     useEffect(() => {
-        let screenLock: WakeLockSentinel | undefined;
-
-        requestLock().then((lock) => {
+        if (active) {
+            requestLock();
             console.log("lock");
-            screenLock = lock;
-        });
-
-        const onVisibilityChange = async () => {
-            if (screenLock !== null && document.visibilityState === "visible") {
-                console.log("tab change");
-                screenLock = await requestLock();
-            }
-        };
-
-        document.addEventListener("visibilitychange", onVisibilityChange);
+        }
 
         return () => {
-            if (typeof screenLock !== "undefined" && screenLock != null) {
-                screenLock.release().then(() => {
-                    console.log("Lock released 🎈");
-                });
-            }
+            releaseLock();
+        };
+    }, [active]);
 
+    const onVisibilityChange = async () => {
+        if (active && lockRef.current !== null && document.visibilityState === "visible") {
+            console.log("tab change");
+            await requestLock();
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("visibilitychange", onVisibilityChange);
+        return () => {
             document.removeEventListener("visibilitychange", onVisibilityChange);
         };
     }, []);

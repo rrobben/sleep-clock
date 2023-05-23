@@ -25,6 +25,7 @@ function App() {
     const [time, setTime] = useState<Dayjs>(dayjs());
     const [sleep, setSleep] = useState<boolean>(mode === "sleep");
     const [periods, setPeriods] = useLocalStorage<string[][]>("periods", SLEEPS);
+    const [settingsOpen, setSettingsOpen] = useState<boolean>(false);
 
     const updateTime = () => {
         setTime(dayjs());
@@ -54,14 +55,14 @@ function App() {
         }
     }, [time, periods]);
 
-    useScreenLock();
+    useScreenLock(!settingsOpen);
 
     return (
         <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             <div className="App">
                 <header className={`App-header ${sleep ? "sleeping" : ""}`}>
-                    <Settings periods={periods} setPeriods={setPeriods} />
+                    <Settings open={settingsOpen} setOpen={setSettingsOpen} periods={periods} setPeriods={setPeriods} />
                     {sleep ? <BedtimeIcon /> : <LightModeIcon />}
                     <p className={`clock ${sleep ? "sleeping" : ""}`}>{time.format(TIME_FORMAT)}</p>
                 </header>

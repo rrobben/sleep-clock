@@ -17,8 +17,17 @@ import Box from "@mui/material/Box";
 import dayjs from "dayjs";
 import { TIME_FORMAT } from "../App";
 
-export const Settings = ({ periods, setPeriods }: { periods: string[][]; setPeriods: React.Dispatch<React.SetStateAction<string[][]>> }) => {
-    const [open, setOpen] = useState<boolean>(false);
+export const Settings = ({
+    open,
+    setOpen,
+    periods,
+    setPeriods,
+}: {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    periods: string[][];
+    setPeriods: React.Dispatch<React.SetStateAction<string[][]>>;
+}) => {
     const [editedPeriods, setEditedPeriods] = useState<string[][]>(periods);
 
     const handleClose = () => {
