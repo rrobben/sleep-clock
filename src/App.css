@@ -11,24 +11,25 @@
   justify-content: center;
   font-size: calc(10px + 20vmin);
   color: orange;
-&.sleeping {
-    color: darkblue;
-    background-color: black;
+}
 
-    &>svg {
-      color: darkblue;
-    }
-  }
+.App-header.sleeping {
+  color: darkblue;
+  background-color: black;
+}
 
-  &>svg {
-    font-size: calc(10px + 40vmin);
-  }
+.App-header > svg {
+  font-size: calc(10px + 40vmin); 
+}
+
+.App-header.sleeping > svg {
+  color: darkblue;
 }
 
 .clock {
   color: orange;
+}
 
-  &.sleeping {
-    color: darkblue;
-  }
+.clock.sleeping {
+  color: darkblue;
 }
