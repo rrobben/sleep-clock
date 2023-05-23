@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import moment from "moment";
 import { useInterval } from "./hooks/useInterval";
 import { useScreenLock } from "./hooks/useScreenLock";
 import BedtimeIcon from "@mui/icons-material/Bedtime";
@@ -9,6 +8,7 @@ import { Settings } from "./components/Settings";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useLocalStorage } from "usehooks-ts";
+import dayjs, { Dayjs } from "dayjs";
 
 const SLEEPS = [["19:00", "07:00"]];
 
@@ -22,12 +22,12 @@ const darkTheme = createTheme({
 
 function App() {
     const mode = new URLSearchParams(window.location.search).get("mode");
-    const [time, setTime] = useState<moment.Moment>(moment());
+    const [time, setTime] = useState<Dayjs>(dayjs());
     const [sleep, setSleep] = useState<boolean>(mode === "sleep");
     const [periods, setPeriods] = useLocalStorage<string[][]>("periods", SLEEPS);
 
     const updateTime = () => {
-        setTime(moment());
+        setTime(dayjs());
     };
 
     useInterval(updateTime, 5000);
@@ -36,15 +36,15 @@ function App() {
         if (!mode) {
             setSleep(
                 periods.some((s) => {
-                    const now = moment();
-                    const sleepStart = moment(s[0], TIME_FORMAT);
-                    const sleepEnd = moment(s[1], TIME_FORMAT);
+                    const now = dayjs();
+                    let sleepStart = dayjs(s[0], TIME_FORMAT);
+                    let sleepEnd = dayjs(s[1], TIME_FORMAT);
 
                     if (sleepStart.isAfter(sleepEnd)) {
                         if (now.isAfter(sleepStart) && now.isAfter(sleepEnd)) {
-                            sleepEnd.add(1, "day");
+                            sleepEnd = sleepEnd.add(1, "day");
                         } else {
-                            sleepStart.subtract(1, "day");
+                            sleepStart = sleepStart.subtract(1, "day");
                         }
                     }
 

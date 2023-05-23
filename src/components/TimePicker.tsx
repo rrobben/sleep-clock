@@ -19,7 +19,6 @@ export const TimePicker = ({ label, value, onChange }: { label?: string; value?:
     const handleChange = (val: Dayjs | null) => {
         if (val) {
             setTime(dayjs(val));
-            console.log(val);
             onChange(val.format(TIME_FORMAT));
         }
     };
