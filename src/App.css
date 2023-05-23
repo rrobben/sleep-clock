@@ -14,7 +14,7 @@
 }
 
 .App-header.sleeping {
-  color: darkblue;
+  color: #033062;
   background-color: black;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .App-header.sleeping > svg {
-  color: darkblue;
+  color: #033062;
 }
 
 .clock {
@@ -31,5 +31,5 @@
 }
 
 .clock.sleeping {
-  color: darkblue;
+  color: #033062;
 }
